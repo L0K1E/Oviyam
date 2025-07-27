@@ -1,0 +1,316 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Theme colors - easily customizable */
+  --primary: #ff6b35;
+  --primary-hover: #ff5722;
+  --primary-muted: #ff6b3520;
+  --primary-dark: #e55a2b;
+
+  /* Dark theme palette */
+  --bg-primary: #000000;
+  --bg-secondary: #0a0a0a;
+  --bg-tertiary: #121212;
+  --bg-panel: #1a1a1a;
+  --bg-panel-title: #242424;
+  --bg-hover: #2a2a2a;
+  --bg-active: #333333;
+
+  /* Text colors */
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-muted: #999999;
+  --text-disabled: #666666;
+
+  /* Borders */
+  --border-primary: #333333;
+  --border-secondary: #2a2a2a;
+  --border-muted: #1a1a1a;
+
+  /* System font */
+  --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 13px;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-system);
+    font-size: var(--font-size-base);
+    line-height: 1.4;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-hover);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-active);
+}
+
+/* Remove all default input styles */
+input,
+textarea,
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Hide number input spinners completely */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  display: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Custom input base class */
+.custom-input {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  color: var(--text-primary);
+  font-size: 11px;
+  padding: 3px 6px;
+  height: 20px;
+  border-radius: 2px;
+  transition: border-color 0.15s ease;
+}
+
+.custom-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.custom-input:hover:not(:focus) {
+  border-color: var(--border-secondary);
+}
+
+.custom-input::placeholder {
+  color: var(--text-disabled);
+}
+
+/* Custom slider base */
+.custom-slider {
+  position: relative;
+  height: 16px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+}
+
+.custom-slider-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--bg-hover);
+  transform: translateY(-50%);
+}
+
+.custom-slider-fill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 2px;
+  background: var(--primary);
+  transform: translateY(-50%);
+  /* transition: width 0.1s ease; */
+}
+
+.custom-slider-thumb {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--primary);
+  border: 1px solid var(--bg-primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  /* transition: transform 0.1s ease; */
+}
+
+.custom-slider-thumb:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.custom-slider-thumb:active,
+.custom-slider-thumb.dragging {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* Color swatch styles */
+.color-swatch {
+  border: 2px solid var(--border-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.color-swatch:hover {
+  transform: scale(1.05);
+}
+
+.color-swatch.stroke-swatch::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+}
+
+/* Color picker popup */
+.color-picker-popup {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-primary);
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+/* Transform handles */
+.transform-handle {
+  position: absolute;
+  background: var(--primary);
+  border: 1px solid var(--bg-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+}
+
+.transform-handle.corner {
+  width: 8px;
+  height: 8px;
+}
+
+.transform-handle.edge {
+  width: 6px;
+  height: 6px;
+}
+
+.transform-handle:hover {
+  transform: scale(1.2);
+}
+
+.transform-handle.nw-resize {
+  cursor: nw-resize;
+}
+.transform-handle.n-resize {
+  cursor: n-resize;
+}
+.transform-handle.ne-resize {
+  cursor: ne-resize;
+}
+.transform-handle.e-resize {
+  cursor: e-resize;
+}
+.transform-handle.se-resize {
+  cursor: se-resize;
+}
+.transform-handle.s-resize {
+  cursor: s-resize;
+}
+.transform-handle.sw-resize {
+  cursor: sw-resize;
+}
+.transform-handle.w-resize {
+  cursor: w-resize;
+}
+
+/* Selection outline */
+.selection-outline {
+  stroke: var(--primary);
+  stroke-width: 1px;
+  stroke-dasharray: 3 3;
+  fill: none;
+  pointer-events: none;
+}
+
+/* Utility classes */
+.panel-bg {
+  background: var(--bg-panel);
+}
+
+.panel-bg-title {
+  background: var(--bg-panel-title);
+}
+
+.border-panel {
+  border-color: var(--border-primary);
+}
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.primary-accent {
+  color: var(--primary);
+}
+
+.primary-bg {
+  background: var(--primary);
+}
+
+.primary-border {
+  border-color: var(--primary);
+}
+
+/* Focus management */
+/* .input-focused * {
+  pointer-events: none;
+}
+
+.input-focused input,
+.input-focused textarea,
+.input-focused select {
+  pointer-events: auto;
+} */
